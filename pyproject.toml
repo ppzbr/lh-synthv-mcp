@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lh-synthv-mcp"
+version = "0.1.0"
+description = "MCP control of Synthesizer V Studio's open project, through the editor's own Lua host"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "ppzbr" }]
+
+# The client is deliberately dependency-free at import time.  The Lua side is the
+# editor's, and the Python side is stdlib plus the transport in the extra below,
+# which is what makes this work on a machine that has Synthesizer V and nothing
+# else installed.
+dependencies = []
+
+[project.optional-dependencies]
+# The MCP server, and the COM/UIA glue in lhai/live.
+mcp = [
+    "mcp>=2",
+    "comtypes>=1.4",
+]
+# Only the named-pipe agent channel in lhai/live/agent.py needs pywin32; the
+# Synthesizer V channel is folder-based and does not import it.
+agent = [
+    "pywin32>=306",
+]
+
+[project.scripts]
+lhai-mcp = "lhai.mcp.server:main"
+
+[tool.setuptools.packages.find]
+include = ["lhai*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"

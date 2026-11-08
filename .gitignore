@@ -1,0 +1,18 @@
+# ---- python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ---- what running the agent writes ----
+# Nothing.  The Lua agent's command and result folders live outside this tree,
+# under %LOCALAPPDATA%\lh-ai-studio\singing\ipc\sv1 and ...\sv2, one per
+# generation of the editor, so that two running editors cannot claim the same
+# batch and apply it twice.
+*.log
